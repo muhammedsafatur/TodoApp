@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Tokens\" />
-    <Folder Include="Category\" />
   </ItemGroup>
 
   <ItemGroup>
