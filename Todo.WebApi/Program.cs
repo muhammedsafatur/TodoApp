@@ -23,3 +23,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+//automapper fluentvalidation globalexception handler,returnmodel,unittest,filtreleme iþlemleri, rol iþi

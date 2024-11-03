@@ -1,12 +1,61 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using Todo.Core.Entities;
 
-namespace Todo.Core.Repository
+namespace Todo.Core.Repository;
+
+public class EfRepositoryBase<TContext, TEntity, TId> : IRepository<TEntity, TId>
+    where TEntity : Entity<TId>, new()
+    where TContext : DbContext
 {
-    internal class EfRepositoryBase
+    protected TContext Context { get; }
+    public EfRepositoryBase(TContext context)
     {
+        Context = context;
+    }
+    public TEntity Add(TEntity entity)
+    {
+        entity.CreatedTime = DateTime.Now;
+        Context.Set<TEntity>().Add(entity);
+        Context.SaveChanges();
+        return entity;
+    }
+
+    public TEntity Delete(TEntity entity)
+    {
+        Context.Set<TEntity>().Remove(entity);
+        Context.SaveChanges();
+        return entity;
+
+    }
+
+    public List<TEntity> GetAll(Expression<Func<TEntity, bool>>? filter = null)
+    {
+        IQueryable<TEntity> query = Context.Set<TEntity>();
+        if (filter is not null)
+        {
+            query = query.Where(filter);
+        }
+
+        return query.ToList();
+    }
+
+    public TEntity GetById(TId id)
+    {
+        return Context.Set<TEntity>().Find(id);
+    }
+
+    public TEntity Update(TEntity entity)
+    {
+        entity.UpdatedTime = DateTime.Now;
+        Context.Set<TEntity>().Update(entity);
+        Context.SaveChanges();
+
+        return entity;
     }
 }

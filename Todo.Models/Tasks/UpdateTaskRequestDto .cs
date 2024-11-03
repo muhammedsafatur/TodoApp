@@ -12,7 +12,8 @@ public record UpdateTaskRequestDto(
     string Title,
     string Description,
     DateTime DueDate,
-    bool IsCompleted
-    
+    bool IsCompleted,
+    PriorityEnum Priority
+
     );
 

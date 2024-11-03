@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Todo.Core.Entities;
 
-public class Entity<TId>
+public abstract class Entity<TId>
 {
-    public required TId Id { get; set; }
-    public DateTime Created { get; set; }   
-    public DateTime Updated { get; set; }
+    public  TId Id { get; set; }
+    public DateTime CreatedTime { get; set; }   
+    public DateTime UpdatedTime { get; set; }
     = DateTime.Now;
     
 
