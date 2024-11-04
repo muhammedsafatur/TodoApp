@@ -1,10 +1,11 @@
 ﻿
-using System.Reflection;
-using Microsoft.EntityFrameworkCore;
-using Todo.Models.Entities;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-namespace Todo.Repository.Context;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using Models.Entities;
+using System.Reflection;
+
+namespace Repository.Context;
 
 public class BaseDbContext : IdentityDbContext<User, IdentityRole, string>
 {
@@ -21,7 +22,7 @@ public class BaseDbContext : IdentityDbContext<User, IdentityRole, string>
     }
 
 
-    public DbSet<Models.Entities.Task> Tasks { get; set; }
+    public DbSet<Models.Entities.Todo> Todos { get; set; }
 
     public DbSet<Category> Categories { get; set; }
 

@@ -1,12 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Todo.Models.Entities;
 
-namespace Todo.Repository.Configurations
+namespace Repository.Configurations
 {
-    public class TaskConfiguration : IEntityTypeConfiguration<Models.Entities.Task>
+    public class TodoConfiguration : IEntityTypeConfiguration<Models.Entities.Todo>
     {
-        public void Configure(EntityTypeBuilder<Models.Entities.Task> builder)
+        public void Configure(EntityTypeBuilder<Models.Entities.Todo> builder)
         {
             builder.ToTable("Tasks").HasKey(c => c.Id);
             builder.Property(c => c.Id).HasColumnName("PostId");
@@ -21,7 +21,7 @@ namespace Todo.Repository.Configurations
             builder.Property(c => c.CategoryId).HasColumnName("CategoryId");
 
 
-            builder.HasOne(x => x.Category).WithMany(x => x.Tasks).HasForeignKey(x => x.CategoryId).OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(x => x.Category).WithMany(x => x.Todos).HasForeignKey(x => x.CategoryId).OnDelete(DeleteBehavior.NoAction);
 
 
             builder.Navigation(x => x.Category).AutoInclude();

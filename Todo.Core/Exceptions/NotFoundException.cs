@@ -4,9 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Models.Category;
+namespace Core.Exceptions;
 
-public record CreateCategoryRequestDto
-(
-    string Title, string Description
-);
+public class NotFoundException(string message) : Exception(message);

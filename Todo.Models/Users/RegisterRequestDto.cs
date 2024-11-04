@@ -1,15 +1,14 @@
-﻿
-namespace Todo.Models.Users;
+﻿namespace Models.Users;
 
-    public class RegisterRequestDto (
-            
-        string Name ,
-        string LastName,
-        string UserName,
-        string Email,
-        DateTime BirthDate,
-        string Password     
-        );
+public class RegisterRequestDto(
 
-    
+    string Name,
+    string LastName,
+    string UserName,
+    string Email,
+    DateTime BirthDate,
+    string Password
+    );
+
+
 

@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Todo.Core.Repository;
-using Todo.Models.Entities;
-using Todo.Repository.Context;
-using Todo.Repository.Repositories.Abstract;
+﻿using Core.Repository;
+using Models.Entities;
+using Repository.Context;
+using Repository.Repositories.Abstract;
 
-namespace Todo.Repository.Repositories.Concretes;
+namespace Repository.Repositories.Concretes;
 
 public class EfCategoryRepository : EfRepositoryBase<BaseDbContext, Category, int>, ICategoryRepository
 {

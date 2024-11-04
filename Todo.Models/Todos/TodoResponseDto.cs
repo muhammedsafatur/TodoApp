@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Todo.Models.Tasks;
+namespace Models.Todos;
 
-public record TaskResponseDto
+public record TodoResponseDto
 {
     public Guid Id { get; set; }
     public string Title { get; set; }
@@ -14,9 +14,9 @@ public record TaskResponseDto
     public DateTime CreatedTime { get; set; }
     public DateTime DueDate { get; set; }
     public bool IsCompleted { get; set; }
-    public string CategoryName  { get; set; }
+    public string CategoryName { get; set; }
     public string UserName { get; set; }
-    public Models.Enums Priority { get; set; }
+    public Enums Priority { get; set; }
 
 
 

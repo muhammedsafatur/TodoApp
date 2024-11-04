@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Todo.Core.Repository;
-using Todo.Models.Entities;
+﻿using Core.Repository;
+using Models.Entities;
 
-namespace Todo.Repository.Repositories.Abstract
+namespace Repository.Repositories.Abstract
 {
-    public interface ICategoryRepository:IRepository<Category,int>
+    public interface ICategoryRepository : IRepository<Category, int>
     {
     }
 }

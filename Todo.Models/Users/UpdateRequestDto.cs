@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Todo.Models.Users;
+namespace Models.Users;
 
-    public record UpdateRequestDto(
-        
-        string UserName,
-        DateTime BirthDate
-        
-        );
+public record UpdateRequestDto(
+
+    string UserName,
+    DateTime BirthDate
+
+    );
 

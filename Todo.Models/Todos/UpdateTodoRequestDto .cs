@@ -4,17 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Todo.Models.Tasks;
+namespace Models.Todos;
 
-public record UpdateTaskRequestDto(
-    
+public record UpdateTodoRequestDto(
+
     Guid Id,
     string Title,
     string Description,
     DateTime CreateTime,
     DateTime DueDate,
     bool IsCompleted,
-    Models.Enums Priority
+    Enums Priority
 
     );
 

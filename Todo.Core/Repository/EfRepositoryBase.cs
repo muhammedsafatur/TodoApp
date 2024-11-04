@@ -1,13 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Core.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
-using Todo.Core.Entities;
 
-namespace Todo.Core.Repository;
+namespace Core.Repository;
 
 public class EfRepositoryBase<TContext, TEntity, TId> : IRepository<TEntity, TId>
     where TEntity : Entity<TId>, new()

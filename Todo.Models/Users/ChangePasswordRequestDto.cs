@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Todo.Models.Users;
+namespace Models.Users;
 
-    public   record ChangePasswordRequestDto
+public record ChangePasswordRequestDto
 (
-    string OldPassword,
-    string NewPassword
+string OldPassword,
+string NewPassword
 );
