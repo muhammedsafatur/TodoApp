@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace Todo.Models.Tasks;
 
-public record CreateTaskRequestDto(string Title,string Description,bool IsCompleted,DateTime DueDate,int CategoryId,string UserId,PriorityEnum Priority);
+public record CreateTaskRequestDto(string Title,string Description,bool IsCompleted,DateTime DueDate,DateTime CreatedTime,int CategoryId,string UserId,Models.Enums Priority);
 

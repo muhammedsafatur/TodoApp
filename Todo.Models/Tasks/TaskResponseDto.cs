@@ -11,11 +11,12 @@ public record TaskResponseDto
     public Guid Id { get; set; }
     public string Title { get; set; }
     public string Description { get; set; }
+    public DateTime CreatedTime { get; set; }
     public DateTime DueDate { get; set; }
     public bool IsCompleted { get; set; }
     public string CategoryName  { get; set; }
     public string UserName { get; set; }
-    public PriorityEnum Priority { get; set; }
+    public Models.Enums Priority { get; set; }
 
 
 

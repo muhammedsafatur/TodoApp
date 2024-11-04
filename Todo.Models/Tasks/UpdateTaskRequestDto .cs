@@ -11,9 +11,10 @@ public record UpdateTaskRequestDto(
     Guid Id,
     string Title,
     string Description,
+    DateTime CreateTime,
     DateTime DueDate,
     bool IsCompleted,
-    PriorityEnum Priority
+    Models.Enums Priority
 
     );
 
