@@ -1,10 +1,12 @@
-﻿using Models.Tokens;
+﻿using Microsoft.AspNetCore.Authentication;
+using Models.Tokens;
 using Models.Users;
-using SweetDictionary.Service.Abstract;
+using Service.Abstract;
 
-namespace SweetDictionary.Service.Concretes
+
+namespace Service.Concretes
 {
-    public class AuthenticationService : IAuthenticationService
+    public class AuthenticationService : Abstract.IAuthenticationService
     {
         private readonly IUserService _userService;
         private readonly IJwtService _jwtService;

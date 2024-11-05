@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SweetDictionary.Service.Abstract;
+namespace Service.Abstract;
 
 public interface IJwtService
 {

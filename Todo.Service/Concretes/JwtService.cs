@@ -2,19 +2,17 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using SweetDictionary.Models.Entities;
-using SweetDictionary.Models.Tokens;
-using SweetDictionary.Service.Abstract;
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Net.WebSockets;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
+using Models.Entities;
+using Models.Tokens;
+using Service.Abstract;
 
-namespace SweetDictionary.Service.Concretes;
+
+using System.IdentityModel.Tokens.Jwt;
+
+using System.Security.Claims;
+
+
+namespace Service.Concretes;
 
 public class JwtService : IJwtService
 {

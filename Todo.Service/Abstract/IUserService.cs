@@ -1,13 +1,9 @@
 ﻿using Models.Entities;
 using Models.Users;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SweetDictionary.Service.Abstract;
+
+namespace Service.Abstract;
 
 public interface IUserService
 {

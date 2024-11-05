@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Models.Users;
 
-public class LoginRequestDto(
+public record LoginRequestDto(
     string Email, string Password
 
     );

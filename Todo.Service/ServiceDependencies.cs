@@ -8,6 +8,8 @@ using Service.Concretes;
 using Service.Rules;
 
 using System.Reflection;
+using AuthenticationService = Service.Concretes.AuthenticationService;
+using IAuthenticationService = Service.Abstract.IAuthenticationService;
 
 
 namespace Service;
@@ -17,10 +19,10 @@ public static class ServiceDependencies
     public static IServiceCollection AddServiceDependenies(this IServiceCollection services)
     {
         services.AddScoped<ITodosService, TodoService>();
-        //services.AddScoped<IUserService, UserService>();
-       // services.AddScoped<ICategoryService, CategoryService>();
+        services.AddScoped<IUserService, UserService>();
+       services.AddScoped<ICategoryService, CategoryService>();
         services.AddScoped<IAuthenticationService, AuthenticationService>();
-        //services.AddScoped<IJwtService, JwtService>();
+        services.AddScoped<IJwtService, JwtService>();
         services.AddScoped<TodoBusinessRules>();
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
         services.AddFluentValidationAutoValidation();

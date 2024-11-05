@@ -1,9 +1,10 @@
 ﻿using Core.Exceptions;
 using Microsoft.AspNetCore.Identity;
-using SweetDictionary.Models.Entities;
-using SweetDictionary.Models.Users;
-using SweetDictionary.Service.Abstract;
-namespace SweetDictionary.Service.Concretes;
+using Models.Entities;
+using Models.Users;
+using Service.Abstract;
+
+namespace Service.Concretes;
 
 public class UserService : IUserService
 {
@@ -34,7 +35,7 @@ public class UserService : IUserService
         User user = new User()
         {
             Email = registerRequestDto.Email,
-            UserName = registerRequestDto.Username,
+            UserName = registerRequestDto.UserName,
             BirthDate = registerRequestDto.BirthDate,
         };
 
@@ -90,7 +91,7 @@ public class UserService : IUserService
         var user = await _userManager.FindByIdAsync(id);
         UserIsPresent(user);
 
-        user.UserName = dto.Username;
+        user.UserName = dto.UserName;
         user.BirthDate = dto.BirthDate;
 
         var result = await _userManager.UpdateAsync(user);

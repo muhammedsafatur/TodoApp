@@ -1,9 +1,9 @@
 ﻿using Core.Exceptions;
 using Microsoft.AspNetCore.Identity;
-using StackExchange.Redis;
-using SweetDictionary.Models.Entities;
-using SweetDictionary.Models.Users;
-using SweetDictionary.Service.Abstract;
+using Models.Entities;
+using Models.Users;
+using Service.Abstract;
+
 
 namespace SweetDictionary.Service.Concretes;
 

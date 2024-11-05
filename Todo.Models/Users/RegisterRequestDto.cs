@@ -1,6 +1,6 @@
 ﻿namespace Models.Users;
 
-public class RegisterRequestDto(
+public record RegisterRequestDto(
 
     string Name,
     string LastName,

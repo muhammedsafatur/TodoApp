@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Core.Entities;
 using Core.Exceptions;
+using Models.Category;
 using Models.Entities;
 using Repository.Repositories.Abstract;
 
@@ -10,13 +11,13 @@ namespace Service.Concretes;
 
 public class CategoryService(ICategoryRepository _categoryRepository, IMapper _mapper) : ICategoryService 
 {
-    public ReturnModel<CategoryAddRequestDto> Add(CategoryAddRequestDto dto)
+    public ReturnModel<CreateCategoryRequestDto> Add(CreateCategoryRequestDto dto)
     {
         Category category = _mapper.Map<Category>(dto);
 
         _categoryRepository.Add(category);
 
-        return new ReturnModel<CategoryAddRequestDto>
+        return new ReturnModel<CreateCategoryRequestDto>
         {
             Message = "Kategori Eklendi.",
             Status = 201,
@@ -25,13 +26,13 @@ public class CategoryService(ICategoryRepository _categoryRepository, IMapper _m
 
     }
 
-    public ReturnModel<NoData> Delete(int id)
+    public ReturnModel<CategoryResponseDto> Delete(int id)
     {
         Category category = CheckGetById(id);
 
         _categoryRepository.Delete(category);
 
-        return new ReturnModel<NoData>
+        return new ReturnModel<CategoryResponseDto>
         {
             Message = "Kategori silindi.",
             Status = 200,
@@ -67,14 +68,14 @@ public class CategoryService(ICategoryRepository _categoryRepository, IMapper _m
 
     }
 
-    public ReturnModel<NoData> Update(CategoryUpdateRequestDto dto)
+    public ReturnModel<UpdateCategoryRequestDto> Update(UpdateCategoryRequestDto dto)
     {
         Category category = CheckGetById(dto.Id);
         category.Name = dto.Name;
 
         _categoryRepository.Update(category);
 
-        return new ReturnModel<NoData>
+        return new ReturnModel<UpdateCategoryRequestDto>
         {
             Message = "Kategori Güncellendi.",
             Success = true,

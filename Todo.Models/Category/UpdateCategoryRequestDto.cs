@@ -8,5 +8,5 @@ namespace Models.Category;
 
 public record UpdateCategoryRequestDto
 (
-    int Id, string Title, string Description
+    int Id,string Name, string Title, string Description
     );
