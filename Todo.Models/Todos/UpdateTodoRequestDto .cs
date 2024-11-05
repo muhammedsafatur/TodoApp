@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Models.Todos;
 
 public record UpdateTodoRequestDto(
@@ -14,7 +15,7 @@ public record UpdateTodoRequestDto(
     DateTime CreateTime,
     DateTime DueDate,
     bool IsCompleted,
-    Enums Priority
+    Enum PriorityEnum
 
     );
 

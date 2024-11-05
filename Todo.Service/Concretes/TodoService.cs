@@ -62,7 +62,7 @@ public class TodoService : ITodosService
             DueDate = deletedTodo.DueDate,
             Description = deletedTodo.Description,
             Id =deletedTodo.Id,
-            Priority = deletedTodo.Priority,
+            PriorityEnum = deletedTodo.Priority,
             IsCompleted = deletedTodo.IsCompleted
         };
 
@@ -76,10 +76,11 @@ public class TodoService : ITodosService
     }
 
 
-    public ReturnModel<ReturnModel<TodoResponseDto>> GetAll()
+    public ReturnModel<List<TodoResponseDto>> GetAll()
     {
         var todos = _todoRepository.GetAll();
         List<TodoResponseDto> responses = _mapper.Map<List<TodoResponseDto>>(todos);
+
         return new ReturnModel<List<TodoResponseDto>>
         {
             Data = responses,
@@ -91,26 +92,80 @@ public class TodoService : ITodosService
 
     public ReturnModel<List<TodoResponseDto>> GetAllByTitleContains(string text)
     {
-        throw new NotImplementedException();
+        var todos = _todoRepository.GetAll(x => x.Title.Contains(text));
+        var responses = _mapper.Map<List<TodoResponseDto>>(todos);
+        return new ReturnModel<List<TodoResponseDto>>
+        {
+            Data = responses,
+            Message = string.Empty,
+            Status = 200,
+            Success = true
+        };
     }
 
     public ReturnModel<List<TodoResponseDto>> GetAllTodosByCategoryId(int categoryId)
     {
-        throw new NotImplementedException();
+        List<Todo> todos = _todoRepository.GetAll(x => x.CategoryId == categoryId);
+        List<TodoResponseDto> responses = _mapper.Map<List<TodoResponseDto>>(todos);
+        return new ReturnModel<List<TodoResponseDto>>
+        {
+            Data = responses,
+            Message = $"Kategori Id sine göre Taskler listelendi : Kategori Id: {categoryId}",
+            Status = 200,
+            Success = true
+        };
     }
 
-    public ReturnModel<List<TodoResponseDto>> GetAllTodosByUserId(Guid userId)
+    public ReturnModel<List<TodoResponseDto>> GetAllTodosByUserId(string userId)
     {
-        throw new NotImplementedException();
+        List<Todo> todos = _todoRepository.GetAll();
+        List<TodoResponseDto> responses = _mapper.Map<List<TodoResponseDto>>(todos);
+
+        return new ReturnModel<List<TodoResponseDto>>
+        {
+            Data = responses,
+            Message = $"Yazar Id sine göre Taskler listelendi : Yazar Id: {userId}",
+            Status = 200,
+            Success = true
+        };
     }
 
     public ReturnModel<TodoResponseDto> GetById(Guid id)
     {
-        throw new NotImplementedException();
+        _businessRules.TodoIsPresent(id);
+
+        var todos = _todoRepository.GetById(id);
+        var response = _mapper.Map<TodoResponseDto>(todos);
+        return new ReturnModel<TodoResponseDto>
+        {
+            Data = response,
+            Message = "İlgili task gösterildi",
+            Status = 200,
+            Success = true
+        };
     }
 
     public ReturnModel<TodoResponseDto> UpdateById(UpdateTodoRequestDto dto)
     {
-        throw new NotImplementedException();
+        _businessRules.TodoIsPresent(dto.Id);
+
+        Todo todo = _todoRepository.GetById(dto.Id);
+
+        todo.Title = dto.Title;
+        todo.Description = dto.Description;
+
+        _todoRepository.Update(todo);
+
+        TodoResponseDto response = _mapper.Map<TodoResponseDto>(todo);
+
+        return new ReturnModel<TodoResponseDto>
+        {
+            Data = response,
+            Message = "task Güncellendi.",
+            Status = 200,
+            Success = true
+        };
     }
+
+   
 }

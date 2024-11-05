@@ -16,7 +16,7 @@ public record TodoResponseDto
     public bool IsCompleted { get; set; }
     public string CategoryName { get; set; }
     public string UserName { get; set; }
-    public Enums Priority { get; set; }
+    public Enum PriorityEnum { get; set; }
 
 
 

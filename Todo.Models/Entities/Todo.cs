@@ -14,7 +14,7 @@ public class Todo : Entity<Guid>
     public bool IsCompleted { get; set; }
     public DateTime CreatedTime { get; set; }
     public DateTime DueDate { get; set; }
-    public Enums Priority { get; set; }
+    public PriorityEnum Priority { get; set; }
 
     public int CategoryId { get; set; }
 
@@ -22,4 +22,10 @@ public class Todo : Entity<Guid>
 
     public string UserId { get; set; }
     public User User { get; set; }
+    public enum PriorityEnum
+    {
+        Low, Medium, High
+
+
+    }
 }
