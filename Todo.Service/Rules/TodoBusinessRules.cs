@@ -16,9 +16,13 @@ public class TodoBusinessRules(ITodoRepository _todoRepository)
         }
         return true;
     }
-    public void TodoTitleMustBeUnique(string title)
+    public virtual void TodoTitleMustBeUnique(string title)
     {
         var todo = _todoRepository.GetAll(x => x.Title == title);
+        if (string.IsNullOrEmpty(title))
+        {
+            throw new ArgumentNullException(nameof(title), "Title cannot be null or empty.");
+        }
         if (todo.Count > 0)
         {
             throw new BusinessException("Task benzersiz olmalı.");

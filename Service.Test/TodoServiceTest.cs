@@ -3,160 +3,153 @@ using Core.Exceptions;
 using Models.Entities;
 using Models.Todos;
 using Moq;
+using NUnit.Framework;
 using Repository.Repositories.Abstract;
 using Service.Concretes;
 using Service.Constants;
 using Service.Rules;
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
-
-
-namespace Service.Test;
-
-public class PostServiceTest
+namespace Service.Test
 {
-    private TodoService _todoService;
-
-    private Mock<ITodoRepository> _mockRepository;
-
-    private Mock<IMapper> _mockMapper;
-
-    private Mock<TodoBusinessRules> _mockRules;
-
-
-    [SetUp]
-    public void SetUp()
+    public class TodoServiceTest
     {
-        _mockRepository = new Mock<ITodoRepository>();
-        _mockMapper = new Mock<IMapper>();
-        _mockRules = new Mock<TodoBusinessRules>(_mockRepository.Object);
+        private TodoService _todoService;
+        private Mock<ITodoRepository> _mockRepository;
+        private Mock<IMapper> _mockMapper;
+        private Mock<TodoBusinessRules> _mockRules; // Mock oluþturuldu
 
-        _todoService = new TodoService(_mockRepository.Object, _mockMapper.Object, _mockRules.Object);
-    }
-
-
-    [Test]
-    public async Task TodoService_WhenPostAdded_ReturnSuccess()
-    {
-
-        // Arrange
-        CreateTodoRequestDto dto = new CreateTodoRequestDto(
-    "deneme",           // Title
-    "deneme",           // Description
-    true,                  // CategoryId
-    DateTime.UtcNow,   // DueDate
-    DateTime.UtcNow,   // CreatedTime
-    1,                  // Priority (örnek bir deðer; uygun þekilde ayarlayýn)
-    "userId",          // UserId (örnek bir deðer; uygun þekilde ayarlayýn)
-    Todo.PriorityEnum.High // PriorityEnum (örnek bir deðer; uygun þekilde ayarlayýn)
-);
-        Todo todo = new Todo
+       
+        [SetUp]
+        public void SetUp()
         {
-            Title = dto.Title,
-            IsCompleted = true,
-            DueDate = DateTime.UtcNow,
-            CreatedTime = DateTime.Now,
-            Priority=Todo.PriorityEnum.High,
-            UserId=dto.UserId, 
-            Id=new Guid(),
-            UpdatedTime = DateTime.Now,          
-            Description = dto.Description,
-            CategoryId = dto.CategoryId
-            
-        };
+            _mockRepository = new Mock<ITodoRepository>();
+            _mockMapper = new Mock<IMapper>();
 
-        TodoResponseDto response = new TodoResponseDto
+            // TodoBusinessRules için mock nesnesini oluþtururken baðýmlýlýðý geçelim
+            _mockRules = new Mock<TodoBusinessRules>(_mockRepository.Object);
+
+            _todoService = new TodoService(_mockRepository.Object, _mockMapper.Object, _mockRules.Object);
+        }
+
+        [Test]
+        public async Task TodoService_WhenTodoAdded_ReturnSuccess()
         {
-            UserName = "deneme",
-            CategoryName = "deneme",
-            Description = "deneme",
-            CreatedTime = DateTime.Now,
-            DueDate =DateTime.MaxValue,
-            IsCompleted = false,
-            PriorityEnum=null,
-            Id = new Guid("{EEF23537-D755-4B37-8A99-831089A5D0F1}"),
-            Title = "deneme"
+            // Arrange
+            var dto = new CreateTodoRequestDto(
+                "deneme",
+                "deneme",
+                true,
+                DateTime.UtcNow,
+                DateTime.UtcNow,
+                1,
+                "userId",
+                Todo.PriorityEnum.High
+            );
 
-        };
+            var todo = new Todo
+            {
+                Title = dto.Title,
+                IsCompleted = false,
+                DueDate = DateTime.UtcNow,
+                CreatedTime = DateTime.Now,
+                Priority = Todo.PriorityEnum.High,
+                UserId = dto.UserId,
+                Id = Guid.NewGuid(),
+                UpdatedTime = DateTime.Now,
+                Description = dto.Description,
+                CategoryId = dto.CategoryId
+            };
 
-        _mockMapper.Setup(x => x.Map<Todo>(dto)).Returns(todo);
-        _mockRepository.Setup(x => x.Add(todo)).Returns(todo);
-        _mockMapper.Setup(x => x.Map<TodoResponseDto>(todo)).Returns(response);
+            var response = new TodoResponseDto
+            {
+                UserName = "deneme",
+                CategoryName = "deneme",
+                Description = "deneme",
+                CreatedTime = DateTime.Now,
+                DueDate = DateTime.MaxValue,
+                IsCompleted = false,
+                PriorityEnum = Todo.PriorityEnum.High,
+                Id = todo.Id,
+                Title = "deneme"
+            };
 
-        // Act 
+            _mockMapper.Setup(x => x.Map<Todo>(dto)).Returns(todo);
+            _mockRepository.Setup(x => x.Add(todo)).Returns(todo);
+            _mockMapper.Setup(x => x.Map<TodoResponseDto>(todo)).Returns(response);
 
-        var result = await _todoService.Add(dto, "{AEF23537-D755-4B37-8A99-831089A5D0F1}");
+            // Act
+            _mockRules.Setup(x => x.TodoTitleMustBeUnique(dto.Title)); // Mock üzerinden setup yapýldý
+            var result = await _todoService.Add(dto, "userId");
 
-        // Assert 
-        Assert.IsTrue(result.Success);
-        Assert.AreEqual(response, result.Data);
-        Assert.AreEqual(200, result.Status);
-        Assert.AreEqual("Post eklendi.", result.Message);
+            // Assert 
+            _mockRules.Verify(x => x.TodoTitleMustBeUnique(dto.Title), Times.Once); // Verifiy
+            Assert.IsTrue(result.Success);
+            Assert.AreEqual(response, result.Data);
+            Assert.AreEqual(200, result.Status);
+            Assert.AreEqual("Task Eklendi.", result.Message);
+        }
 
-    }
-
-    [Test]
-    public void TodoService_WhenPostIsPresent_RemovePost()
-    {
-        // Arrange
-        Guid id = new Guid("{BEF23537-D755-4B37-8A99-831089A5D0F1}");
-        Todo todo = new Todo
+        [Test]
+        public void TodoService_WhenTodoIsPresent_RemoveTodo()
         {
-            Id = id,
-            Title = "dto.Title",
-            Description = "dto.Content",
-            CategoryId = 1,
-            UserId = "DENEME",
-            CreatedTime = DateTime.Now,
-            UpdatedTime = DateTime.Now
-        };
+            // Arrange
+            Guid id = Guid.Parse("{BEF23537-D755-4B37-8A99-831089A5D0F1}");
+            var todo = new Todo
+            {
+                Id = id,
+                Title = "dto.Title",
+                Description = "dto.Content",
+                CategoryId = 1,
+                UserId = "DENEME",
+                CreatedTime = DateTime.Now,
+                UpdatedTime = DateTime.Now
+            };
 
+            _mockRules.Setup(x => x.TodoIsPresent(id)); // Mock üzerinden setup yapýldý
 
-        _mockRules.Setup(x => x.TodoIsPresent(id)).Returns(true);
+            _mockRepository.Setup(x => x.GetById(id)).Returns(todo);
+            _mockRepository.Setup(x => x.Delete(todo)).Returns(todo);
 
+            // Act
+            var result = _todoService.DeleteById(id);
 
-        _mockRepository.Setup(x => x.GetById(id)).Returns(todo);
-        _mockRepository.Setup(x => x.Delete(todo)).Returns(todo);
+            // Assert
+            Assert.IsTrue(result.Success);
+        }
 
+        [Test]
+        public void TodoService_WhenTodoIsNotPresent_RemoveFailed()
+        {
+            // Arrange 
+            Guid id = Guid.Parse("{BEF23537-D755-4B37-8A99-831089A5D0F1}");
+            _mockRules.Setup(x => x.TodoIsPresent(id)).Throws(new NotFoundException(Messages.TodoIsNotPresentMessage(id)));
 
-        // Act
+            // Assert
+            Assert.Throws<NotFoundException>(() => _todoService.DeleteById(id), Messages.TodoIsNotPresentMessage(id));
+        }
 
-        var result = _todoService.DeleteById(id);
+        [Test]
+        public void TodoService_WhenGetAllByTitleContainsFilter_ReturnsList()
+        {
+            // Arrange
+            string text = "deneme";
+            var todos = new List<Todo>();
+            var todoResponseDto = new List<TodoResponseDto>();
+            _mockRepository.Setup(x => x.GetAll(It.IsAny<Expression<Func<Todo, bool>>>()))
+                           .Returns(todos);
+            _mockMapper.Setup(x => x.Map<List<TodoResponseDto>>(todos)).Returns(todoResponseDto);
 
-        // Assert
+            // Act
+            var result = _todoService.GetAllByTitleContains(text);
 
-        Assert.IsTrue(result.Success);
+            // Assert
+            Assert.AreEqual(todoResponseDto, result.Data);
+            Assert.IsTrue(result.Success);
+            Assert.AreEqual(200, result.Status);
+        }
     }
-
-    [Test]
-    public void TodoService_WhenPostIsNotPresent_RemoveFailed()
-    {
-        // Arrange 
-        Guid id = new Guid("{BEF23537-D755-4B37-8A99-831089A5D0F1}");
-
-        _mockRules.Setup(x => x.TodoIsPresent(id)).Throws(new NotFoundException(Messages.TodoIsNotPresentMessage(id)));
-
-        //Assert
-        Assert.Throws<NotFoundException>(() => _todoService.DeleteById(id), Messages.TodoIsNotPresentMessage(id));
-    }
-
-    [Test]
-    public void TodoService_WhenGetAllByTitleContainsFilter_ReturnsList()
-    {
-        // Arange
-
-        string text = "deneme";
-        List<Todo> todos = new List<Todo>();
-        List<TodoResponseDto> todoResponseDto = new();
-        _mockRepository.Setup(x => x.GetAll(x => x.Title.Contains(text))).Returns(todos);
-        _mockMapper.Setup(x => x.Map<List<TodoResponseDto>>(todos)).Returns(todoResponseDto);
-
-
-        // Act
-        var result = _todoService.GetAllByTitleContains(text);
-        //Assert
-        Assert.AreEqual(todoResponseDto, result.Data);
-        Assert.IsTrue(result.Success);
-        Assert.AreEqual(200, result.Status);
-    }
-
 }
