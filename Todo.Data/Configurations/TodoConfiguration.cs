@@ -9,11 +9,11 @@ namespace Repository.Configurations
         public void Configure(EntityTypeBuilder<Models.Entities.Todo> builder)
         {
             builder.ToTable("Tasks").HasKey(c => c.Id);
-            builder.Property(c => c.Id).HasColumnName("PostId");
+            builder.Property(c => c.Id).HasColumnName("TaskId");
             builder.Property(c => c.CreatedTime).HasColumnName("CreatedTime");
             builder.Property(c => c.DueDate).HasColumnName("UpdatedTime");
             builder.Property(c => c.Title).HasColumnName("Title");
-            builder.Property(c => c.Priority).HasColumnName("Content");
+            builder.Property(c => c.Priority).HasColumnName("Priority");
             builder.Property(c => c.IsCompleted).HasColumnName("IsCompleted");
             builder.Property(c => c.Description).HasColumnName("Description");
 

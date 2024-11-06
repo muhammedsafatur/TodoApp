@@ -5,9 +5,9 @@ using Models.Users;
 using Service.Abstract;
 
 
-namespace SweetDictionary.Service.Concretes;
+namespace Service.Concretes;
 
-public sealed class RoleService : IRoleService
+public sealed class RoleService : IRoleService 
 {
     private readonly UserManager<User> userManager;
     private readonly RoleManager<IdentityRole> roleManager;

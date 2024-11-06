@@ -8,7 +8,7 @@ using Repository.Context;
 
 #nullable disable
 
-namespace WebApi.Migrations
+namespace Repository.Migrations
 {
     [DbContext(typeof(BaseDbContext))]
     partial class BaseDbContextModelSnapshot : ModelSnapshot
@@ -189,10 +189,10 @@ namespace WebApi.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedTime = new DateTime(2024, 11, 5, 17, 9, 50, 667, DateTimeKind.Local).AddTicks(1966),
+                            CreatedTime = new DateTime(2024, 11, 6, 12, 37, 8, 640, DateTimeKind.Local).AddTicks(249),
                             Description = "Description",
                             Name = "Yazılım işlerim",
-                            UpdatedTime = new DateTime(2024, 11, 5, 17, 9, 50, 667, DateTimeKind.Local).AddTicks(1956)
+                            UpdatedTime = new DateTime(2024, 11, 6, 12, 37, 8, 640, DateTimeKind.Local).AddTicks(235)
                         });
                 });
 
@@ -201,7 +201,7 @@ namespace WebApi.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasColumnName("PostId");
+                        .HasColumnName("TaskId");
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int")
@@ -226,7 +226,7 @@ namespace WebApi.Migrations
 
                     b.Property<int>("Priority")
                         .HasColumnType("int")
-                        .HasColumnName("Content");
+                        .HasColumnName("Priority");
 
                     b.Property<string>("Title")
                         .IsRequired()

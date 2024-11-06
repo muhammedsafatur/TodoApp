@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace WebApi.Migrations
+namespace Repository.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -177,20 +177,20 @@ namespace WebApi.Migrations
                 name: "Tasks",
                 columns: table => new
                 {
-                    PostId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TaskId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsCompleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Content = table.Column<int>(type: "int", nullable: false),
+                    Priority = table.Column<int>(type: "int", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     UpdatedTime1 = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Tasks", x => x.PostId);
+                    table.PrimaryKey("PK_Tasks", x => x.TaskId);
                     table.ForeignKey(
                         name: "FK_Tasks_AspNetUsers_UserId",
                         column: x => x.UserId,
@@ -207,7 +207,7 @@ namespace WebApi.Migrations
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "CategoryId", "CreatedTime", "Description", "Category_Name", "UpdatedTime" },
-                values: new object[] { 1, new DateTime(2024, 11, 5, 17, 9, 50, 667, DateTimeKind.Local).AddTicks(1966), "Description", "Yazılım işlerim", new DateTime(2024, 11, 5, 17, 9, 50, 667, DateTimeKind.Local).AddTicks(1956) });
+                values: new object[] { 1, new DateTime(2024, 11, 6, 12, 37, 8, 640, DateTimeKind.Local).AddTicks(249), "Description", "Yazılım işlerim", new DateTime(2024, 11, 6, 12, 37, 8, 640, DateTimeKind.Local).AddTicks(235) });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

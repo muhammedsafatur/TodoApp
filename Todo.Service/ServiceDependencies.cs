@@ -6,7 +6,7 @@ using Service.Abstract;
 using Service.Concretes;
 
 using Service.Rules;
-
+using Service.Concretes;
 using System.Reflection;
 using AuthenticationService = Service.Concretes.AuthenticationService;
 using IAuthenticationService = Service.Abstract.IAuthenticationService;
@@ -16,11 +16,12 @@ namespace Service;
 
 public static class ServiceDependencies
 {
-    public static IServiceCollection AddServiceDependenies(this IServiceCollection services)
+    public static IServiceCollection AddServiceDependencies(this IServiceCollection services)
     {
         services.AddScoped<ITodosService, TodoService>();
         services.AddScoped<IUserService, UserService>();
-       services.AddScoped<ICategoryService, CategoryService>();
+        services.AddScoped<IRoleService, RoleService>();
+        services.AddScoped<ICategoryService, CategoryService>();
         services.AddScoped<IAuthenticationService, AuthenticationService>();
         services.AddScoped<IJwtService, JwtService>();
         services.AddScoped<TodoBusinessRules>();

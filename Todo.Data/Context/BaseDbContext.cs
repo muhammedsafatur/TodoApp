@@ -20,9 +20,12 @@ public class BaseDbContext : IdentityDbContext<User, IdentityRole, string>
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        base.OnConfiguring(optionsBuilder); // Base class configuration
-        optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=TodoApp_db;Integrated Security=true;",
-            b => b.MigrationsAssembly("WebApi")); // WebApi projesini migration assembly olarak ayarla
+        if (!optionsBuilder.IsConfigured)
+        {
+            optionsBuilder.UseSqlServer(
+                "Your_Connection_String_Here", // appsettings.json'dan almanız önerilir.
+                options => options.MigrationsAssembly("Repository"));
+        }
     }
 
     public DbSet<Todo> Todos { get; set; }

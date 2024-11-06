@@ -2,23 +2,25 @@
 using Models.Users;
 using Service.Abstract;
 
-
-namespace WebApi.Controllers;
-
 [Route("api/[controller]")]
 [ApiController]
-public class UsersController(IUserService _userService, IAuthenticationService _authenticationService) : ControllerBase
+public class UsersController : ControllerBase
 {
+    private readonly IUserService _userService;
+    private readonly IAuthenticationService _authenticationService;
 
-
-    [HttpPost("creeate")]
-    public async Task<IActionResult> CreateUser([FromBody]RegisterRequestDto dto)
+    public UsersController(IUserService userService, IAuthenticationService authenticationService)
     {
-        var result = await _authenticationService.RegisterByTokenAsync(dto);
-
-        return Ok(result);
+        _userService = userService;
+        _authenticationService = authenticationService;
     }
 
+    [HttpPost("create")]
+    public async Task<IActionResult> CreateUser([FromBody] RegisterRequestDto dto)
+    {
+        var result = await _authenticationService.RegisterByTokenAsync(dto);
+        return Ok(result);
+    }
 
     [HttpGet("getbyemail")]
     public async Task<IActionResult> GetByEmail([FromQuery] string email)
@@ -35,25 +37,23 @@ public class UsersController(IUserService _userService, IAuthenticationService _
     }
 
     [HttpDelete("delete")]
-    public async Task<IActionResult> Delete([FromQuery]string id)
+    public async Task<IActionResult> Delete([FromQuery] string id)
     {
         var result = await _userService.DeleteAsync(id);
         return Ok(result);
     }
 
-
     [HttpPut("update")]
-    public async Task<IActionResult> Update([FromQuery]string id, [FromBody] UpdateRequestDto dto)
+    public async Task<IActionResult> Update([FromQuery] string id, [FromBody] UpdateRequestDto dto)
     {
-        var result = await _userService.UpdateAsync(id,dto);
+        var result = await _userService.UpdateAsync(id, dto);
         return Ok(result);
     }
 
     [HttpPut("changepassword")]
     public async Task<IActionResult> ChangePassword(string id, ChangePasswordRequestDto dto)
     {
-        var result = await _userService.ChangePasswordAsync(id,dto);
+        var result = await _userService.ChangePasswordAsync(id, dto);
         return Ok(result);
     }
-
 }
