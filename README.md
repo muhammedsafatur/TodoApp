@@ -39,13 +39,12 @@ Veritabanı oluşturma: Proje dizinindeki appsettings.json dosyasındaki bağlan
 Veritabanı göçleri için aşağıdaki komutu kullanın:
 
   ```bash
-
 dotnet ef database update
 
 4.**Projeyi çalıştırma:**
 
 ```bash
-  dotnet run
+  dotnet run```
 
 ***API EndPoints***
 Kullanıcı
