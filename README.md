@@ -26,21 +26,21 @@ TodoApp API, kullanıcıların günlük görevlerini yönetebilmeleri için tasa
    [https://dotnet.microsoft.com/download](https://dotnet.microsoft.com/download)
    
 2. **Proje kopyalama:**
-   `bash
+   `Git bash
    git clone https://github.com/muhammedsafatur/TodoApp.git`
 
 3.**Bağımlılıkları yükleme:**
-   `bash
+   `Git bash
      cd TodoApp`
    dotnet restore`
 
 Veritabanı oluşturma: Proje dizinindeki appsettings.json dosyasındaki bağlantı bilgilerini kontrol edin.
 Veritabanı göçleri için aşağıdaki komutu kullanın:
- `bash
+ `Git bash
 dotnet ef database update`
 
 4.**Projeyi çalıştırma:**
-`bash
+`Git bash
   dotnet run`
 
 ***API EndPoints***
